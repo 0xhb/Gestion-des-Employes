@@ -3,6 +3,8 @@ package com.hb.genstionemployes.service;
 import com.hb.genstionemployes.entity.Employe;
 import com.hb.genstionemployes.repository.EmployeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
+import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -12,16 +14,19 @@ import java.util.List;
 @Service
 public class EmployeService {
     private final EmployeRepository employeRepository;
+
+    @Autowired
+    private MessageSource messageSource;
     
     @Autowired
     public EmployeService(EmployeRepository employeRepository) {
         this.employeRepository = employeRepository;
     }
     
-    public ResponseEntity<Employe> addEmploye(Employe employe){
+    public ResponseEntity<String> addEmploye(Employe employe, Local locale){
         try {
             Employe newEmploye = employeRepository.save(employe);
-            return new ResponseEntity<>(newEmploye, HttpStatus.CREATED);
+            return new ResponseEntity<>(messageSource.getMessage("employee.added", null, locale), HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }

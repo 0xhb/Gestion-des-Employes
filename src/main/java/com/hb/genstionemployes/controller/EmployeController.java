@@ -3,6 +3,7 @@ package com.hb.genstionemployes.controller;
 import com.hb.genstionemployes.entity.Employe;
 import com.hb.genstionemployes.service.EmployeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,8 +18,8 @@ public class EmployeController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Employe> add(@RequestBody Employe employe){
-        return employeService.addEmploye(employe);
+    public ResponseEntity<String> add(@RequestBody Employe employe, Local local){
+        return employeService.addEmploye(employe, local);
     }
 
     @GetMapping("/{id}")
